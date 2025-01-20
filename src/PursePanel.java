@@ -1,10 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util. List;
+import java.util.*;
+import java.util.List;
 
 public class PursePanel extends JPanel {
     private Purse purse;
@@ -32,8 +30,9 @@ public class PursePanel extends JPanel {
              return;
         }
 
-        List<Map.Entry<Denomination,Integer>> denomsSorted = new ArrayList<>(purse.getCash().entrySet());
-        denomsSorted.sort(Map.Entry.comparingByValue());
+        //Sort function. Had to find this online to get display in order from greatest to least
+        List<Map.Entry<Denomination, Integer>> denomsSorted = new ArrayList<>(purse.getCash().entrySet());
+        denomsSorted.sort(Comparator.comparingDouble((Map.Entry<Denomination, Integer> e) -> e.getKey().amt()).reversed());
 
         int x = 20;
         int y = 20;
