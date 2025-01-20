@@ -20,10 +20,20 @@ public class PursePanel extends JPanel {
         for(Map.Entry<Denomination, Integer> entry : purse.getCash().entrySet())
         {
             Denomination denomination = entry.getKey();
-            int amount = entry.getValue();
+            int count = entry.getValue();
 
-            URL imgURL = getClass().getResource("/images/" + denomination + ".png");
+            ImageIcon icon = new ImageIcon("images/" + denomination.img());
+            Image scaledImage = icon.getImage().getScaledInstance(100, 50, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon = new ImageIcon(scaledImage);
+
+            JLabel imageLabel = new JLabel(resizedIcon);
+            JLabel textLabel = new JLabel(count + " x " + denomination.name());
+
+            this.add(imageLabel);
+            this.add(textLabel);
         }
+        revalidate();
+        repaint();
     }
 
     @Override

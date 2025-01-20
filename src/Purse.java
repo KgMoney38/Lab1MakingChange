@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,13 +54,14 @@ public class Purse {
         return total;
     }
 
-    public String toString()
-    {
-        String text = "Purse Contains: \n";
-        for (Denomination key : cash.keySet()) {
-            text += cash.get(key) + " " + key.name() + "\n";
-
-        }
-        return text + "Total: $ " + getValue();
+    @Override
+    public String toString() {
+        return cash.entrySet().stream()
+                //REMEMBER THIS FOR SORTING!
+                //THE ONLY WAY I COULD GET THE CURRENCY TO DISPLAY FROM GREATEST TO LEAST
+                .sorted(Comparator.comparingDouble((Map.Entry<Denomination, Integer> e) -> e.getKey().amt()).reversed())
+                .map(entry -> entry.getValue() + " " + entry.getKey().name())
+                .reduce("Purse Contains:\n", (a, b) -> a + b + "\n")
+                + "Total: $ " + BigDecimal.valueOf(getValue()).setScale(2, RoundingMode.HALF_UP);
     }
 }
