@@ -8,16 +8,16 @@ public class Register
 {
 
     private static final List<Denomination> Denominations = Arrays.asList(
-            new Denomination("Hundred Dollar Bill(s)", 100.0, "bill", "hundred.png"),
-            new Denomination("Fifty Dollar Bill(s)", 50.0, "bill", "fifty.png"),
-            new Denomination("Twenty Dollar Bill(s)", 20.0, "bill", "twenty.png")  ,
-            new Denomination("Ten Dollar Bill(s)", 10.0, "bill", "ten.png"),
-            new Denomination("Five Dollar Bill(s)", 5.0, "bill", "five.png"),
-            new Denomination("Dollar Bill(s)", 1.0, "bill", "dollar.png"),
-            new Denomination("Quarter(s)", .25, "coin", "quarter.png"),
-            new Denomination("Dime(s)", .1, "coin", "dime.png"),
-            new Denomination("Nickel(s)", .05, "coin", "nickel.png"),
-            new Denomination("Penny", .01, "coin", "penny.png")
+            new Denomination("Hundred Dollar Bill(s)", 100.0, "bill", "hundred"),
+            new Denomination("Fifty Dollar Bill(s)", 50.0, "bill", "fifty"),
+            new Denomination("Twenty Dollar Bill(s)", 20.0, "bill", "twenty")  ,
+            new Denomination("Ten Dollar Bill(s)", 10.0, "bill", "ten"),
+            new Denomination("Five Dollar Bill(s)", 5.0, "bill", "five"),
+            new Denomination("Dollar Bill(s)", 1.0, "bill", "dollar"),
+            new Denomination("Quarter(s)", .25, "coin", "quarter"),
+            new Denomination("Dime(s)", .1, "coin", "dime"),
+            new Denomination("Nickel(s)", .05, "coin", "nickel"),
+            new Denomination("Penny", .01, "coin", "penny")
     );
 
     public Purse makeChange(double amt)
