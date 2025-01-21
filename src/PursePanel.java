@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -9,10 +11,10 @@ public class PursePanel extends JPanel {
     private Map<String, Image> imageCache = new HashMap<>();
 
     public PursePanel() {
-        purse = new Purse();
+        purse = new Purse(); //Represents the amount to display—initialize to empty Purse
         //Set layout like in Kotlin FlowLayout works too but GridBag looks better
         this.setPreferredSize(new Dimension(600, 400));
-        this.setBackground(Color.BLUE);
+        this.setBackground(Color.DARK_GRAY);
     }
 
     public void updatePurse(Purse newPurse)
@@ -21,6 +23,7 @@ public class PursePanel extends JPanel {
         repaint();
     }
 
+    //Holds the logic for displaying purse contents
     @Override
     public void paintComponent(Graphics g)
     {
@@ -40,17 +43,25 @@ public class PursePanel extends JPanel {
         for (Map.Entry<Denomination, Integer> entry : denomsSorted)
         {
             Denomination denomination = entry.getKey();
-            int count = entry.getValue();
+            double count = entry.getValue();
+            //Round the pennies for proper output
+            if(denomination.amt()==.01)
+            {
+                count= Math.ceil(count+.001);
+            }
 
             String imgPath = "images/" + denomination.img() + ".png";
             Image image = imageCache.computeIfAbsent(imgPath, path ->
                     new ImageIcon(getClass().getClassLoader().getResource(path)).getImage().getScaledInstance(100, 50, Image.SCALE_SMOOTH));
+
             for(int i=0; i< count; i++)
             {
                 g.drawImage(image, x+ (i*110), y, this);
             }
+                int numberOf= (int) count;
+
             g.setColor(Color.WHITE);
-            g.drawString(count + " x " + denomination.name(), x, y +70);
+            g.drawString(numberOf + " x " + denomination.name(), x, y +70);
             y+=80;
         }
     }

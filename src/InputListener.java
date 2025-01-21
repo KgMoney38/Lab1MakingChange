@@ -11,6 +11,7 @@ public class InputListener implements ActionListener
     private PursePanel pursePanel;
     private JTextField input;
 
+    //A listener for changes to the input
     public InputListener(Register register, PursePanel pursePanel, JTextField input)
     {
         this.register = register;
@@ -18,6 +19,7 @@ public class InputListener implements ActionListener
         this.input = input;
     }
 
+    //What happens when input changes
     @Override
     public void actionPerformed(ActionEvent e)
     {

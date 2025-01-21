@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 
 public class RegisterPanel extends JPanel
 {
-    private Register register;
+    private Register register; //A register object to run the logic
     private JTextField input;
     private JButton makeChangeButton;
-    private PursePanel changePanel;
+    private PursePanel changePanel; //A panel to display the change
 
     public RegisterPanel()
     {
@@ -18,8 +18,8 @@ public class RegisterPanel extends JPanel
         this.setLayout(new BorderLayout());
 
         //Make panel and button
-        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,10));
-        input = new JTextField(10);
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,10)); //A panel to hold the JTextField for the user to enter an amount
+        input = new JTextField(10); //A place for the user to enter the amount
         makeChangeButton = new JButton("Make Change");
 
         inputPanel.add(new JLabel("Enter Amount: "));
@@ -32,6 +32,8 @@ public class RegisterPanel extends JPanel
         this.add(changePanel, BorderLayout.CENTER);
 
         makeChangeButton.addActionListener(new changeListener());
+        //For enter input just like in Kotlin
+        input.addActionListener(new changeListener());
     }
     private void processInput()
     {

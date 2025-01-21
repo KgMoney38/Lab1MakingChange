@@ -20,6 +20,8 @@ public class Register
             new Denomination("Penny", .01, "coin", "penny")
     );
 
+    //Takes an amt and returns a Purse containing
+    //that amount in the fewest number of bills and coins.
     public Purse makeChange(double amt)
     {
         Purse purse = new Purse();
@@ -34,5 +36,25 @@ public class Register
         }
 
         return purse;
+    }
+
+    //Creates a Register and demonstrates that it works.
+    static void main (String[] args)
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter amount: ");
+
+        if(!scanner.hasNextDouble())
+        {
+            System.out.println("Invalid input");
+            return;
+        }
+
+        double amt = scanner.nextDouble();
+        Register register = new Register();
+        Purse purse = register.makeChange(amt);
+
+        System.out.println("Change for: $" + amt);
+        System.out.println(purse);
     }
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 public class Purse {
 
     //Denomination is the key, Integer is the value
+    //Represents the money in the purse
     private Map<Denomination, Integer> cash;
 
     //Constructor
@@ -17,24 +18,34 @@ public class Purse {
         cash = new HashMap<>();
     }
 
+    //Adds a number of a particular denomination
     public void add(Denomination type, int num)
     {
+        //To get my pennie displayed right
+        if(type.amt() == 0.01)
+        {
+            num= (int) Math.ceil(num);
+        }
             //Couldn't gt it to work without getOrDefault
             cash.put(type, cash.getOrDefault(type,0) + num);
 
     }
 
+    //Diminishes the money in the purse and returns that amount.
     public double remove(Denomination type, int num)
     {
-        if (cash.containsKey(type) && cash.get(type) >= num)
+        if (cash.containsKey(type))
         {
-            cash.put(type, cash.get(type)- num);
+            int available = cash.get(type);
+            int remove = Math.min(num, available);
+            cash.put(type, available- remove);
 
-            if (cash.get(type) == 0) {
+            if (cash.get(type) == 0)
+            {
                 cash.remove(type);
             }
 
-            return type.amt() * num;
+            return type.amt() * remove;
         }
         return 0.0;
     }
@@ -44,6 +55,7 @@ public class Purse {
         return cash;
     }
 
+    //Returns the amount of money in the Purse
     public double getValue()
     {
         double total = 0.0;
@@ -54,6 +66,7 @@ public class Purse {
         return total;
     }
 
+    //Returns a string representation of the Purse and its contents
     @Override
     public String toString() {
         return cash.entrySet().stream()
@@ -63,5 +76,6 @@ public class Purse {
                 .map(entry -> entry.getValue() + " " + entry.getKey().name())
                 .reduce("Purse Contains:\n", (a, b) -> a + b + "\n")
                 + "Total: $ " + BigDecimal.valueOf(getValue()).setScale(2, RoundingMode.HALF_UP);
+
     }
 }
