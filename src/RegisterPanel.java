@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class RegisterPanel extends JPanel
 {
     private Register register; //A register object to run the logic
+    private JPanel inputPanel;
     private JTextField input;
     private JButton makeChangeButton;
     private PursePanel changePanel; //A panel to display the change
@@ -13,7 +14,10 @@ public class RegisterPanel extends JPanel
     public RegisterPanel()
     {
         register = new Register();
-
+        setup();
+    }
+    public void setup()
+    {
         //Study these layouts, they were just recommended by Intelli J
         this.setLayout(new BorderLayout());
 
@@ -35,17 +39,17 @@ public class RegisterPanel extends JPanel
         //For enter input just like in Kotlin
         input.addActionListener(new changeListener());
     }
-    private void processInput()
+    public void processInput()
     {
         double amount = Double.parseDouble(input.getText());
-        if (amount < 0.01) {
+        if (amount < 0.004) {
             changePanel.updatePurse(new Purse());
         } else {
             Purse purse = register.makeChange(amount);
             changePanel.updatePurse(purse);
         }
     }
-    private class changeListener implements ActionListener
+    public class changeListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e)
         {

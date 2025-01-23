@@ -25,13 +25,16 @@ public class Register
     public Purse makeChange(double amt)
     {
         Purse purse = new Purse();
+        int totalCents = (int) Math.round(amt * 100);
+
         for (Denomination d : Denominations)
         {
-            int count = (int) (amt / d.amt());
+            int denomCent = (int) Math.round(d.amt()*100);
+            int count = totalCents/ denomCent;
             if (count > 0)
             {
                 purse.add(d, count);
-                amt -= count * d.amt();
+                totalCents -= count * denomCent;
             }
         }
 

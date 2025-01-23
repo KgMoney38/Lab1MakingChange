@@ -1,8 +1,6 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 //Done.
 
@@ -58,24 +56,49 @@ public class Purse {
     //Returns the amount of money in the Purse
     public double getValue()
     {
+        int pennyFix=0;
         double total = 0.0;
+
         for (Map.Entry<Denomination, Integer> entry : cash.entrySet())
         {
-            total+= entry.getKey().amt() * entry.getValue();
+            pennyFix+= (int) Math.round(entry.getKey().amt()*100)*entry.getValue();
         }
-        return total;
+
+        return pennyFix/100.0;
     }
 
     //Returns a string representation of the Purse and its contents
     @Override
-    public String toString() {
-        return cash.entrySet().stream()
-                //REMEMBER THIS FOR SORTING!
-                //THE ONLY WAY I COULD GET THE CURRENCY TO DISPLAY FROM GREATEST TO LEAST
-                .sorted(Comparator.comparingDouble((Map.Entry<Denomination, Integer> e) -> e.getKey().amt()).reversed())
-                .map(entry -> entry.getValue() + " " + entry.getKey().name())
-                .reduce("Purse Contains:\n", (a, b) -> a + b + "\n")
-                + "Total: $ " + BigDecimal.valueOf(getValue()).setScale(2, RoundingMode.HALF_UP);
+    public String toString()
+    {
+        //Convert to a List so I can sort it
+        List<Map.Entry<Denomination, Integer>> list = new ArrayList<>(cash.entrySet());
+
+        //Sort by value for a better look
+        list.sort(Comparator.comparingDouble(e-> -e.getKey().amt()));
+
+        //If empty
+        if (getValue() < 0.005) {
+           return "Empty Purse";
+        }
+
+        String contents = "Purse Contains: \n";
+
+        for (Map.Entry<Denomination, Integer> entry : list)
+        {
+            contents += entry.getValue() + ": " + entry.getKey().name() + "\n";
+
+        }
+
+        //Fix rounding penny problem
+        int total = (int) Math.round(getValue()*100);
+        double roundedTotal = total/100.0;
+
+
+        //Add total value to string and format it for better look
+        contents += String.format("Total: $%.2f\n", roundedTotal);
+
+        return contents;
 
     }
 }
