@@ -1,32 +1,27 @@
 import javax.swing.*;
-import java.util.Scanner;
+//Slightly updated
 
+//Class that launches my app
 public class MakingChange {
     public static void main(String[] args) {
-        // Console input for testing purposes
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the amount: ");
-        double amt = scanner.nextDouble();
 
-        // Create strategy and register
-        ChangeStrategy strategy = new GreedyChangeStrategy(DenominationFactory.createAll());
-        Register register = new Register(strategy);
+        //Just sets my GUI components to the native system style
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println("Could not set Look and Feel");
+        }
 
-        // Make change and get a purse
-        Purse purse = register.makeChange(amt);
+        //Open my app window
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("💰 Making Change");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(700, 800);
+            frame.setLocationRelativeTo(null); // Center on screen
 
-        // GUI setup
-        JFrame frame = new JFrame("Making Change");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 300);
+            frame.add(new RegisterPanel());
 
-        PursePanel panel = new PursePanel(purse); // Observer pulls from purse
-        frame.add(panel);
-
-        frame.setVisible(true);
-
-        // Console log (optional)
-        System.out.println("Making change for: $" + amt);
-        System.out.println(purse);
+            frame.setVisible(true);
+        });
     }
 }
