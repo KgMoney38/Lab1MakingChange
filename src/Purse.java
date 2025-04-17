@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
 //Done.
 
 public class Purse {
@@ -13,13 +12,12 @@ public class Purse {
     //Represents the money in the purse
     private Map<Denomination, Integer> cash;
 
-    //Constructor
     public Purse()
     {
         cash = new HashMap<>();
     }
 
-    //Adds a number of a particular denomination
+    //Adds a number of one denomination at a time
     public void add(Denomination type, int num)
     {
         //To get my pennie displayed right
@@ -34,7 +32,7 @@ public class Purse {
 
     }
 
-    //Diminishes the money in the purse and returns that amount.
+    //Diminishes the money in the purse and returns that amount
     public double remove(Denomination type, int num)
     {
         if (cash.containsKey(type))
