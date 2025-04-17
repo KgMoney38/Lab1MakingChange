@@ -1,8 +1,11 @@
 import java.util.Arrays;
 import java.util.List;
 
+//NEW for my lab 4
+//Factory class to create my list of denominations
 public class DenominationFactory
 {
+    //Very similar to the record denomination class i used in lab1
     public static List<Denomination> createAll() {
         return Arrays.asList(
                 new Denomination("Hundred Dollar Bill(s)", 100.0, "bill", "hundred"),
