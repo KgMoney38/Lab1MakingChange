@@ -11,7 +11,7 @@ public class InputListener implements ActionListener
     private PursePanel pursePanel;
     private JTextField input;
 
-    //A listener for changes to the input
+    //Just a listener for changes to input
     public InputListener(Register register, PursePanel pursePanel, JTextField input)
     {
         this.register = register;
@@ -19,19 +19,16 @@ public class InputListener implements ActionListener
         this.input = input;
     }
 
-    //What happens when input changes
+   //Called when input field triggers a action event
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         double amount = Double.parseDouble(input.getText());
-        if(amount<0.01)
-        {
-            pursePanel.updatePurse(new Purse());
-        }
-        else
-        {
-            Purse purse = register.makeChange(amount);
-            pursePanel.updatePurse(purse);
+        Purse purse = null;
+        if (amount < 0.01) {
+            pursePanel.update(purse);
+        } else {
+            purse = register.makeChange(amount);
+            pursePanel.update(purse);
         }
     }
 }
