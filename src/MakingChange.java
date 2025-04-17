@@ -1,39 +1,32 @@
 import javax.swing.*;
 import java.util.Scanner;
 
-//Done.
+public class MakingChange {
+    public static void main(String[] args) {
+        // Console input for testing purposes
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the amount: ");
+        double amt = scanner.nextDouble();
 
-public class MakingChange
-{
-    public static void main(String[] args)
-    {
+        // Create strategy and register
+        ChangeStrategy strategy = new GreedyChangeStrategy(DenominationFactory.createAll());
+        Register register = new Register(strategy);
 
-            JFrame frame = new JFrame("Making Change");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1000, 1000);
+        // Make change and get a purse
+        Purse purse = register.makeChange(amt);
 
-            frame.add(new RegisterPanel());
-            frame.setVisible(true);
+        // GUI setup
+        JFrame frame = new JFrame("Making Change");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 300);
 
-            char repeat = ' ';
+        PursePanel panel = new PursePanel(purse); // Observer pulls from purse
+        frame.add(panel);
 
-            //Do while loop to help the reviewers out so they don't have to
-            //relaunch every time they need to test a value in the console window
-            do {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Enter the amount: ");
-                double amt = scanner.nextDouble();
+        frame.setVisible(true);
 
-                Register register = new Register();
-                //double amt = 338.38;
-                Purse change = register.makeChange(amt);
-                System.out.println("Making change for: $" + amt);
-
-                System.out.println(change);
-                System.out.println("Repeat? Any key for yes/ N||n for no");
-                repeat = scanner.next().charAt(0);
-
-            }while (repeat != 'n'|| repeat != 'N');
-
+        // Console log (optional)
+        System.out.println("Making change for: $" + amt);
+        System.out.println(purse);
     }
 }

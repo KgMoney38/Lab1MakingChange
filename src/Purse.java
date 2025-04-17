@@ -1,6 +1,9 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+
 
 //Done.
 
@@ -27,6 +30,8 @@ public class Purse {
             //Couldn't gt it to work without getOrDefault
             cash.put(type, cash.getOrDefault(type,0) + num);
 
+        notifyObservers();
+
     }
 
     //Diminishes the money in the purse and returns that amount.
@@ -45,7 +50,11 @@ public class Purse {
 
             return type.amt() * remove;
         }
+
+        notifyObservers();
+
         return 0.0;
+
     }
 
     //Couldn't get it to display right using get value for the list of denominations and the total value so added this class
@@ -101,4 +110,22 @@ public class Purse {
         return contents;
 
     }
+
+    private final Set<PurseObserver> observers = new HashSet<>();
+
+    public void addObserver(PurseObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(PurseObserver observer) {
+        observers.remove(observer);
+    }
+
+    // Pull update: just notifies observers that something changed
+    private void notifyObservers() {
+        for (PurseObserver observer : observers) {
+            observer.update(this); // they pull state using this
+        }
+    }
+
 }
