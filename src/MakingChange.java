@@ -14,7 +14,7 @@ public class MakingChange {
 
         //Open my app window
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("💰 Making Change");
+            JFrame frame = new JFrame("$$$Making Change$$$");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(700, 800);
             frame.setLocationRelativeTo(null); // Center on screen

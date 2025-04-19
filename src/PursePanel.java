@@ -5,17 +5,39 @@ import java.util.Map;
 //Displays the contents of the purse using my images
 public class PursePanel extends JPanel implements PurseObserver {
     private JPanel coinDisplay;
+    private Image backgroundImage;
+    private Icon backgroundGif;
 
     //Set up my display panel and registers as an observer
     public PursePanel(Purse purse) {
         purse.addObserver(this);
         setLayout(new BorderLayout());
 
+        //Set my background to the american flag since we are dealing with american currency
+        backgroundGif= new ImageIcon(getClass().getResource("/images/america.gif"));
+        backgroundImage = ((ImageIcon) backgroundGif).getImage();
+
+        //Make my coin panel transparent over the background gif
         coinDisplay = new JPanel();
-        coinDisplay.setLayout(new GridLayout(0, 2, 10, 10)); // two columns
+        coinDisplay.setOpaque(false);
+        coinDisplay.setLayout(new GridLayout(0, 2, 10, 10));
 
         add(new JScrollPane(coinDisplay), BorderLayout.CENTER);
-        update(purse); // first draw
+        update(purse);
+    }
+
+    //Draw the background
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        //Size and fade my background gif
+        if (backgroundImage != null) {
+            Graphics2D flag = (Graphics2D) g.create();
+            flag.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            flag.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            flag.dispose();
+        }
     }
 
     //Only called when the purse updates it updates the coin display
